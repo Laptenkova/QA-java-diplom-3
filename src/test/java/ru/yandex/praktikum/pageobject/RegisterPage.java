@@ -135,4 +135,8 @@ public class RegisterPage {
     public String generateUniqueEmail() {
         return "burger_test_" + System.currentTimeMillis() + "@mail.ru";
     }
+
+    public By getRegisterButtonLocator() {
+        return registerButton;
+    }
 }
