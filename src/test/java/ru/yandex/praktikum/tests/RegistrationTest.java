@@ -35,10 +35,7 @@ public class RegistrationTest {
         LoginPage loginPage = mainPage.clickLoginAccountButton();
         RegisterPage registerPage = loginPage.clickRegisterLink();
 
-        registerPage.enterName(USER_NAME);
-        registerPage.enterEmail("unique" + System.currentTimeMillis() + "@test.com");
-        registerPage.enterPassword(VALID_PASSWORD);
-        registerPage.clickRegisterButton();
+        registerPage.register(USER_NAME, "unique" + System.currentTimeMillis() + "@test.com", VALID_PASSWORD);
 
         assertTrue("Должна отображаться страница логина после регистрации",
                 loginPage.isLoginPageLoaded());
@@ -50,10 +47,7 @@ public class RegistrationTest {
         LoginPage loginPage = mainPage.clickLoginAccountButton();
         RegisterPage registerPage = loginPage.clickRegisterLink();
 
-        registerPage.enterName(USER_NAME);
-        registerPage.enterEmail("test@example.com");
-        registerPage.enterPassword(SHORT_PASSWORD);
-        registerPage.clickRegisterButton();
+        registerPage.register(USER_NAME, "test@example.com", SHORT_PASSWORD);
 
         String error = registerPage.getPasswordError();
         assertTrue("Должна отображаться ошибка о коротком пароле",

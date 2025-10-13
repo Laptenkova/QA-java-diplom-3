@@ -3,8 +3,8 @@ package ru.yandex.praktikum.constants;
 import java.util.UUID;
 
 public class TestConstants {
-    public static final String VALID_EMAIL = "Ivanov_BurgerMaster_123@mail.ru";
-    public static final String VALID_PASSWORD = "1234567";
+    public static final String VALID_EMAIL = "Ivanov_BurgerMaster@mail.ru";
+    public static final String VALID_PASSWORD = "1111111";
     public static final String USER_NAME = "Иван";
     public static final String SHORT_PASSWORD = "12345";
 
