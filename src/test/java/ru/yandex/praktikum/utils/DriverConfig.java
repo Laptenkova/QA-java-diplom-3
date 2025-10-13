@@ -10,7 +10,7 @@ public class DriverConfig {
     public static final String FIREFOX_BROWSER = "firefox";
 
     // URL для Stellar Burgers
-    public static final String BASE_URL = "https://stellarburgers.nomoreparties.site";
+    public static final String BASE_URL = "https://stellarburgers.education-services.ru/";
 
     // Таймауты
     public static final long IMPLICIT_WAIT_SECONDS = 5;

@@ -20,7 +20,7 @@ public class LoginSteps {
 
     public void waitForLoginPage() {
         logger.info("Waiting for login page to load");
-        wait.until(ExpectedConditions.visibilityOf(loginPage.getLoginButtonLocator()));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(loginPage.getLoginButtonLocator()));
     }
 
     public void loginWithCredentials(String email, String password) {

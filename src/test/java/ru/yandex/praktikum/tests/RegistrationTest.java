@@ -1,5 +1,6 @@
 package ru.yandex.praktikum.tests;
 
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +30,7 @@ public class RegistrationTest {
     }
 
     @Test
+    @DisplayName("Успешная регистрация нового пользователя")
     public void successfulRegistrationTest() {
         LoginPage loginPage = mainPage.clickLoginAccountButton();
         RegisterPage registerPage = loginPage.clickRegisterLink();
@@ -43,6 +45,7 @@ public class RegistrationTest {
     }
 
     @Test
+    @DisplayName("Ошибка при вводе короткого пароля")
     public void registrationWithShortPasswordTest() {
         LoginPage loginPage = mainPage.clickLoginAccountButton();
         RegisterPage registerPage = loginPage.clickRegisterLink();

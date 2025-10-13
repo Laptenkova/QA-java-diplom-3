@@ -21,18 +21,18 @@ public class ConstructorSteps {
     public void clickBunsSection() {
         logger.info("Клик по разделу Булки");
         mainPage.clickBunsSection();
-        wait.until(ExpectedConditions.textToBePresentInElement(mainPage.getCurrentSectionLocator(), "Булки"));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(mainPage.getCurrentSectionLocator(), "Булки"));
     }
 
     public void clickSaucesSection() {
         logger.info("Клик по разделу Соусы");
         mainPage.clickSaucesSection();
-        wait.until(ExpectedConditions.textToBePresentInElement(mainPage.getCurrentSectionLocator(), "Соусы"));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(mainPage.getCurrentSectionLocator(), "Соусы"));
     }
 
     public void clickFillingsSection() {
         logger.info("Клик по разделу Начинки");
         mainPage.clickFillingsSection();
-        wait.until(ExpectedConditions.textToBePresentInElement(mainPage.getCurrentSectionLocator(), "Начинки"));
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(mainPage.getCurrentSectionLocator(), "Начинки"));
     }
 }

@@ -20,7 +20,8 @@ public class RegistrationSteps {
 
     public void waitForRegisterPage() {
         logger.info("Ожидание загрузки страницы регистрации");
-        wait.until(ExpectedConditions.visibilityOf(registerPage.getRegisterButtonLocator()));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(registerPage.getRegisterButtonLocator()));
+
     }
 
     public void register(String name, String email, String password) {

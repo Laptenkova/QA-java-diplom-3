@@ -8,10 +8,6 @@ import java.time.Duration;
 
 import static ru.yandex.praktikum.utils.DriverConfig.*;
 
-/**
- * Фабрика для создания и управления экземплярами WebDriver.
- * Поддерживает Chrome и Firefox.
- */
 public class DriverFactory {
     private WebDriver driver;
 

@@ -1,5 +1,6 @@
 package ru.yandex.praktikum.tests;
 
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,18 +27,21 @@ public class ConstructorTest {
     }
 
     @Test
+    @DisplayName("Переход к разделу 'Булки'")
     public void navigateToBunsSectionTest() {
         mainPage.clickBunsSection();
         assertEquals("Должен быть активен раздел Булки", "Булки", mainPage.getCurrentSectionText());
     }
 
     @Test
+    @DisplayName("Переход к разделу 'Соусы'")
     public void navigateToSaucesSectionTest() {
         mainPage.clickSaucesSection();
         assertEquals("Должен быть активен раздел Соусы", "Соусы", mainPage.getCurrentSectionText());
     }
 
     @Test
+    @DisplayName("Переход к разделу 'Начинки'")
     public void navigateToFillingsSectionTest() {
         mainPage.clickFillingsSection();
         assertEquals("Должен быть активен раздел Начинки", "Начинки", mainPage.getCurrentSectionText());

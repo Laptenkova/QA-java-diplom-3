@@ -1,5 +1,6 @@
 package ru.yandex.praktikum.pageobject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -37,35 +38,43 @@ public class MainPage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
     }
 
+    @Step("Нажатие кнопки 'Войти в аккаунт'")
     public LoginPage clickLoginAccountButton() {
         clickElement(loginAccountButton);
         return new LoginPage(driver);
     }
 
+    @Step("Нажатие кнопки 'Личный кабинет'")
     public LoginPage clickPersonalAccountButton() {
         clickElement(personalAccountButton);
         return new LoginPage(driver);
     }
 
+    @Step("Нажатие раздела 'Булки'")
     public void clickBunsSection() {
         clickElement(bunsSection);
     }
 
+    @Step("Нажатие раздела 'Соусы'")
     public void clickSaucesSection() {
         clickElement(saucesSection);
     }
 
+    @Step("Нажатие раздела 'Начинки'")
     public void clickFillingsSection() {
         clickElement(fillingsSection);
     }
 
+    @Step("Получение текста активного раздела")
     public String getCurrentSectionText() {
         return getText(currentSection);
     }
 
+    @Step("Проверка загрузки главной страницы")
     public boolean isMainPageLoaded() {
         return isDisplayed(By.xpath("//h1[text()='Соберите бургер']"));
     }
+
     public By getCurrentSectionLocator() {
         return currentSection;
     }
