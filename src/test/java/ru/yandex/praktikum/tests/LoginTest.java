@@ -1,10 +1,7 @@
 package ru.yandex.praktikum.tests;
 
 import io.qameta.allure.junit4.DisplayName;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import ru.yandex.praktikum.factory.DriverFactory;
 import ru.yandex.praktikum.pageobject.LoginPage;
 import ru.yandex.praktikum.pageobject.MainPage;
 import ru.yandex.praktikum.pageobject.RegisterPage;
@@ -12,51 +9,54 @@ import ru.yandex.praktikum.pageobject.RegisterPage;
 import static org.junit.Assert.assertTrue;
 import static ru.yandex.praktikum.constants.TestConstants.*;
 
-public class LoginTest {
-    private DriverFactory driverFactory;
+/**
+ * Тесты функциональности входа в систему
+ * Наследует от BaseTest для автоматической инициализации WebDriver
+ */
+public class LoginTest extends BaseTest {
 
-    @Before
-    public void setUp() {
-        driverFactory = new DriverFactory();
-    }
-
-    @After
-    public void tearDown() {
-        if (driverFactory != null) {
-            driverFactory.quitDriver();
-        }
-    }
-
+    /**
+     * Проверяет вход в систему по кнопке "Войти в аккаунт" на главной странице
+     */
     @Test
     @DisplayName("Вход по кнопке 'Войти в аккаунт' на главной")
     public void loginViaAccountButtonTest() {
-        MainPage mainPage = new MainPage(driverFactory.getDriver());
+        MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
         assertTrue("Должна отображаться страница логина", loginPage.isLoginPageLoaded());
     }
 
+    /**
+     * Проверяет вход через кнопку "Личный кабинет" на главной странице
+     */
     @Test
     @DisplayName("Вход через кнопку 'Личный кабинет'")
     public void loginViaPersonalAccountTest() {
-        MainPage mainPage = new MainPage(driverFactory.getDriver());
+        MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickPersonalAccountButton();
         assertTrue("Должна отображаться страница логина", loginPage.isLoginPageLoaded());
     }
 
+    /**
+     * Проверяет переход с формы регистрации на страницу логина
+     */
     @Test
     @DisplayName("Вход через кнопку в форме регистрации")
     public void loginFromRegistrationPageTest() {
-        MainPage mainPage = new MainPage(driverFactory.getDriver());
+        MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
         RegisterPage registerPage = loginPage.clickRegisterLink();
         LoginPage returnedLoginPage = registerPage.clickLoginLink();
         assertTrue("Должна отображаться страница логина", returnedLoginPage.isLoginPageLoaded());
     }
 
+    /**
+     * Проверяет возможность перехода со страницы восстановления пароля на страницу логина
+     */
     @Test
     @DisplayName("Вход через кнопку в форме восстановления пароля")
     public void loginFromPasswordRecoveryPageTest() {
-        MainPage mainPage = new MainPage(driverFactory.getDriver());
+        MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
 
         // Переходим на страницу восстановления пароля
@@ -64,17 +64,19 @@ public class LoginTest {
 
         // Проверяем что перешли на страницу восстановления
         assertTrue("Должна отображаться страница восстановления пароля",
-                driverFactory.getDriver().getCurrentUrl().contains("/forgot-password"));
+                driver.getCurrentUrl().contains("/forgot-password"));
 
-        // Здесь нужно добавить переход обратно на страницу логина
-        // Для этого потребуется создать ForgotPasswordPage
-        driverFactory.getDriver().navigate().back();
+        // Возвращаемся назад на страницу логина
+        driver.navigate().back();
     }
 
+    /**
+     * Проверяет успешный вход с валидными учетными данными
+     */
     @Test
     @DisplayName("Успешный вход с валидными данными")
     public void successfulLoginTest() {
-        MainPage mainPage = new MainPage(driverFactory.getDriver());
+        MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
 
         loginPage.setEmail(VALID_EMAIL);
@@ -85,10 +87,13 @@ public class LoginTest {
                 mainPage.isMainPageLoaded());
     }
 
+    /**
+     * Проверяет, что при вводе неверного пароля появляется сообщение об ошибке
+     */
     @Test
     @DisplayName("Ошибка при входе с неверным паролем")
     public void loginWithInvalidPasswordTest() {
-        MainPage mainPage = new MainPage(driverFactory.getDriver());
+        MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
 
         loginPage.setEmail(VALID_EMAIL);
