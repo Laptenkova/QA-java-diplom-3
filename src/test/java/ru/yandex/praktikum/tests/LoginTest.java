@@ -7,7 +7,8 @@ import ru.yandex.praktikum.pageobject.MainPage;
 import ru.yandex.praktikum.pageobject.RegisterPage;
 
 import static org.junit.Assert.assertTrue;
-import static ru.yandex.praktikum.constants.TestConstants.*;
+import static ru.yandex.praktikum.constants.TestConstants.INVALID_PASSWORD;
+import static ru.yandex.praktikum.constants.TestConstants.VALID_PASSWORD;
 
 /**
  * Тесты функциональности входа в систему
@@ -72,14 +73,19 @@ public class LoginTest extends BaseTest {
 
     /**
      * Проверяет успешный вход с валидными учетными данными
+     * Пользователь создается через API перед тестом
      */
     @Test
     @DisplayName("Успешный вход с валидными данными")
     public void successfulLoginTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
+        // Создаем пользователя через API
+        String testUserEmail = loginPage.createUserViaApi();
 
-        loginPage.setEmail(VALID_EMAIL);
+        // Добавляем пользователя в список для очистки после теста
+        usersToCleanup.add(testUserEmail);
+        loginPage.setEmail(testUserEmail);
         loginPage.setPassword(VALID_PASSWORD);
         loginPage.clickLoginButton();
 
@@ -89,14 +95,19 @@ public class LoginTest extends BaseTest {
 
     /**
      * Проверяет, что при вводе неверного пароля появляется сообщение об ошибке
+     * Пользователь создается через API перед тестом
      */
     @Test
     @DisplayName("Ошибка при входе с неверным паролем")
     public void loginWithInvalidPasswordTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
+        // Создаем пользователя через API
+        String testUserEmail = loginPage.createUserViaApi();
+        // Добавляем пользователя в список для очистки после теста
+        usersToCleanup.add(testUserEmail);
 
-        loginPage.setEmail(VALID_EMAIL);
+        loginPage.setEmail(testUserEmail);
         loginPage.setPassword(INVALID_PASSWORD);
         loginPage.clickLoginButton();
 

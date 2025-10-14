@@ -26,7 +26,12 @@ public class RegistrationTest extends BaseTest {
         RegisterPage registerPage = loginPage.clickRegisterLink();
 
         // Регистрируем пользователя с уникальным email
-        registerPage.register(USER_NAME, generateUniqueEmail(), VALID_PASSWORD);
+        String testEmail = generateUniqueEmail();
+
+        // Добавляем email в список для очистки после теста
+        usersToCleanup.add(testEmail);
+
+        registerPage.register(USER_NAME, testEmail, VALID_PASSWORD);
 
         // Проверяем, что появилась страница логина после регистрации
         assertTrue("Должна отображаться страница логина после регистрации",
