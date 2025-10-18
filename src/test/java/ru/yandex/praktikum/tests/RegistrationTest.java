@@ -29,11 +29,11 @@ public class RegistrationTest extends BaseTest {
         LoginPage loginPage = mainPage.clickLoginAccountButton();
         RegisterPage registerPage = loginPage.clickRegisterLink();
 
-        String testEmail = loginPage.createUserViaApi();
-
-        usersToCleanup.add(testEmail);
+        String testEmail = generateUniqueEmail();
 
         registerPage.register(USER_NAME, testEmail, VALID_PASSWORD);
+
+        usersToCleanup.add(testEmail);
 
         assertTrue("Должна отображаться страница логина после регистрации",
                 loginPage.isLoginPageLoaded());
@@ -51,10 +51,11 @@ public class RegistrationTest extends BaseTest {
         LoginPage loginPage = mainPage.clickLoginAccountButton();
         RegisterPage registerPage = loginPage.clickRegisterLink();
 
-        String testEmail = loginPage.createUserViaApi();
+        String testEmail = generateUniqueEmail();
+
+        registerPage.register(USER_NAME, testEmail, SHORT_PASSWORD);
 
         usersToCleanup.add(testEmail);
-        registerPage.register(USER_NAME, testEmail, SHORT_PASSWORD);
 
         String error = registerPage.getPasswordError();
         assertTrue("Должна отображаться ошибка о коротком пароле",

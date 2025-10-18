@@ -4,6 +4,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
+import ru.yandex.praktikum.api.UserApi;
 import ru.yandex.praktikum.pageobject.LoginPage;
 import ru.yandex.praktikum.pageobject.MainPage;
 import ru.yandex.praktikum.pageobject.RegisterPage;
@@ -28,7 +29,7 @@ public class LoginTest extends BaseTest {
     public void loginViaAccountButtonTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
-        String testUserEmail = loginPage.createUserViaApi();
+        String testUserEmail = UserApi.createUser();
 
         usersToCleanup.add(testUserEmail);
 
@@ -50,7 +51,7 @@ public class LoginTest extends BaseTest {
     public void loginViaPersonalAccountTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickPersonalAccountButton();
-        String testUserEmail = loginPage.createUserViaApi();
+        String testUserEmail = UserApi.createUser();
 
         usersToCleanup.add(testUserEmail);
 
@@ -106,7 +107,7 @@ public class LoginTest extends BaseTest {
     public void successfulLoginTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
-        String testUserEmail = loginPage.createUserViaApi();
+        String testUserEmail = UserApi.createUser();
 
         usersToCleanup.add(testUserEmail);
         loginPage.setEmail(testUserEmail);
@@ -128,7 +129,7 @@ public class LoginTest extends BaseTest {
     public void loginWithInvalidPasswordTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
-        String testUserEmail = loginPage.createUserViaApi();
+        String testUserEmail = UserApi.createUser();
         usersToCleanup.add(testUserEmail);
 
         loginPage.setEmail(testUserEmail);

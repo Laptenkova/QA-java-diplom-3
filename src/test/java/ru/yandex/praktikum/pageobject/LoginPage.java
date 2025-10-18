@@ -5,12 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.yandex.praktikum.models.User;
-import ru.yandex.praktikum.utils.ApiConfig;
 
 import java.time.Duration;
-
-import static ru.yandex.praktikum.constants.TestConstants.*;
 
 /**
  * Page Object для страницы авторизации
@@ -104,30 +100,5 @@ public class LoginPage {
     @Step("Проверка загрузки страницы логина")
     public boolean isLoginPageLoaded() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(loginButton)).isDisplayed();
-    }
-
-    /**
-     * Создает пользователя через API и возвращает email
-     * Использует сериализацию объекта User для формирования JSON
-     *
-     * @return email созданного пользователя
-     */
-    @Step("Создание тестового пользователя через API")
-    public String createUserViaApi() {
-        String email = generateUniqueEmail();
-
-        User user = new User(email, VALID_PASSWORD, USER_NAME);
-
-        io.restassured.response.Response response = io.restassured.RestAssured.given()
-                .spec(ApiConfig.getBaseSpec())
-                .body(user)
-                .when()
-                .post("auth/register");
-
-        if (response.getStatusCode() != 200) {
-            throw new RuntimeException("Не удалось создать пользователя через API: " + response.getBody().asString());
-        }
-
-        return email;
     }
 }

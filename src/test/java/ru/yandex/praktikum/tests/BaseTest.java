@@ -3,8 +3,7 @@ package ru.yandex.praktikum.tests;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
-import ru.yandex.praktikum.models.UserCredentials;
-import ru.yandex.praktikum.utils.ApiConfig;
+import ru.yandex.praktikum.api.UserApi;
 import ru.yandex.praktikum.utils.DriverHelper;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class BaseTest {
     protected WebDriver driver;
 
     /**
-     * Список email пользователей, созданных через API для последующей очистки
+     * Список email пользователей, созданных через API для последуючной очистки
      * Обеспечивает удаление тестовых данных после выполнения тестов
      */
     protected List<String> usersToCleanup = new ArrayList<>();
@@ -82,14 +81,7 @@ public class BaseTest {
      */
     protected void deleteUserViaApi(String email) {
         try {
-            UserCredentials credentials = new UserCredentials(email, "1111111");
-
-            io.restassured.response.Response loginResponse = io.restassured.RestAssured.given()
-                    .spec(ApiConfig.getBaseSpec())
-                    .body(credentials)
-                    .when()
-                    .post("auth/login");
-
+            UserApi.deleteUser(email);
         } catch (Exception e) {
             System.out.println("Ошибка при удалении пользователя " + email + ": " + e.getMessage());
         }
