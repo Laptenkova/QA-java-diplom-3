@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.yandex.praktikum.models.User;
+import ru.yandex.praktikum.utils.ApiConfig;
 
 import java.time.Duration;
 
@@ -18,7 +20,6 @@ public class LoginPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Локаторы элементов страницы
     private final By emailField = By.cssSelector("input[name='name']");
     private final By passwordField = By.cssSelector("input[name='Пароль']");
     private final By loginButton = By.cssSelector("button.button_button__33qZ0.button_button_type_primary__1O7Bx.button_button_size_medium__3zxIa");
@@ -107,21 +108,19 @@ public class LoginPage {
 
     /**
      * Создает пользователя через API и возвращает email
+     * Использует сериализацию объекта User для формирования JSON
      *
      * @return email созданного пользователя
      */
     @Step("Создание тестового пользователя через API")
     public String createUserViaApi() {
         String email = generateUniqueEmail();
-        String requestBody = String.format(
-                "{\"email\": \"%s\", \"password\": \"%s\", \"name\": \"%s\"}",
-                email, VALID_PASSWORD, USER_NAME
-        );
+
+        User user = new User(email, VALID_PASSWORD, USER_NAME);
 
         io.restassured.response.Response response = io.restassured.RestAssured.given()
-                .header("Content-type", "application/json")
-                .baseUri("https://stellarburgers.education-services.ru/api/")
-                .body(requestBody)
+                .spec(ApiConfig.getBaseSpec())
+                .body(user)
                 .when()
                 .post("auth/register");
 

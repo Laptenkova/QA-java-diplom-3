@@ -16,13 +16,13 @@ public class MainPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    // Локаторы элементов главной страницы
     private final By loginAccountButton = By.cssSelector("button.button_button__33qZ0.button_button_type_primary__1O7Bx.button_button_size_large__G21Vg");
     private final By personalAccountButton = By.cssSelector("a[href='/account'] p");
     private final By bunsSection = By.xpath("//span[text()='Булки']");
     private final By saucesSection = By.xpath("//span[text()='Соусы']");
     private final By fillingsSection = By.xpath("//span[text()='Начинки']");
     private final By currentSection = By.cssSelector("div.tab_tab_type_current__2BEPc");
+    private final By mainPageHeader = By.xpath("//h1[text()='Соберите бургер']");
 
     /**
      * Конструктор инициализирует драйвер и ожидание
@@ -129,6 +129,6 @@ public class MainPage {
      */
     @Step("Проверка загрузки главной страницы")
     public boolean isMainPageLoaded() {
-        return isDisplayed(By.xpath("//h1[text()='Соберите бургер']"));
+        return isDisplayed(mainPageHeader);
     }
 }

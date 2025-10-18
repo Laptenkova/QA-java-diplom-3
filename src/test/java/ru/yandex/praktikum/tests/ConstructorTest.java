@@ -1,5 +1,7 @@
 package ru.yandex.praktikum.tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import ru.yandex.praktikum.pageobject.MainPage;
@@ -18,6 +20,8 @@ public class ConstructorTest extends BaseTest {
      */
     @Test
     @DisplayName("Переход к разделу 'Булки'")
+    @Description("Проверка перехода к разделу 'Булки'. Ожидается активация и отображение раздела с булками")
+    @Step("Проверка перехода к разделу Булки в конструкторе бургеров")
     public void navigateToBunsSectionTest() {
         MainPage mainPage = new MainPage(driver);
         mainPage.clickBunsSection();
@@ -30,6 +34,8 @@ public class ConstructorTest extends BaseTest {
      */
     @Test
     @DisplayName("Переход к разделу 'Соусы'")
+    @Description("Проверка перехода к разделу 'Соусы'. Ожидается активация и отображение раздела с соусами")
+    @Step("Проверка перехода к разделу Соусы в конструкторе бургеров")
     public void navigateToSaucesSectionTest() {
         MainPage mainPage = new MainPage(driver);
         mainPage.clickSaucesSection();
@@ -42,6 +48,8 @@ public class ConstructorTest extends BaseTest {
      */
     @Test
     @DisplayName("Переход к разделу 'Начинки'")
+    @Description("Проверка перехода к разделу 'Начинки'. Ожидается активация и отображение раздела с начинками")
+    @Step("Проверка перехода к разделу Начинки в конструкторе бургеров")
     public void navigateToFillingsSectionTest() {
         MainPage mainPage = new MainPage(driver);
         mainPage.clickFillingsSection();

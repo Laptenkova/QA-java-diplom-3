@@ -3,6 +3,8 @@ package ru.yandex.praktikum.tests;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
+import ru.yandex.praktikum.models.UserCredentials;
+import ru.yandex.praktikum.utils.ApiConfig;
 import ru.yandex.praktikum.utils.DriverHelper;
 
 import java.io.IOException;
@@ -48,11 +50,10 @@ public class BaseTest {
      */
     @After
     public void tearDown() {
-        // Очистка тестовых пользователей перед закрытием браузера
         cleanupTestUsers();
 
         if (driver != null) {
-            driver.quit();  // Полностью закрывает браузер и завершает сессию
+            driver.quit();
         }
     }
 
@@ -81,33 +82,14 @@ public class BaseTest {
      */
     protected void deleteUserViaApi(String email) {
         try {
-            // Сначала получаем токен через логин
-            String loginBody = String.format(
-                    "{\"email\": \"%s\", \"password\": \"%s\"}",
-                    email, "1111111" // Пароль тестового пользователя
-            );
+            UserCredentials credentials = new UserCredentials(email, "1111111");
 
             io.restassured.response.Response loginResponse = io.restassured.RestAssured.given()
-                    .header("Content-type", "application/json")
-                    .baseUri("https://stellarburgers.education-services.ru/api/")
-                    .body(loginBody)
+                    .spec(ApiConfig.getBaseSpec())
+                    .body(credentials)
                     .when()
                     .post("auth/login");
 
-            if (loginResponse.getStatusCode() == 200) {
-                String token = loginResponse.then().extract().path("accessToken");
-
-                // Удаляем пользователя с использованием токена
-                io.restassured.response.Response deleteResponse = io.restassured.RestAssured.given()
-                        .header("Authorization", token)
-                        .baseUri("https://stellarburgers.education-services.ru/api/")
-                        .when()
-                        .delete("auth/user");
-
-                if (deleteResponse.getStatusCode() != 202) {
-                    System.out.println("Не удалось удалить пользователя: " + deleteResponse.getBody().asString());
-                }
-            }
         } catch (Exception e) {
             System.out.println("Ошибка при удалении пользователя " + email + ": " + e.getMessage());
         }

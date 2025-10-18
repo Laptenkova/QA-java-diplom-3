@@ -1,5 +1,7 @@
 package ru.yandex.praktikum.tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.Test;
 import ru.yandex.praktikum.pageobject.LoginPage;
@@ -20,11 +22,22 @@ public class LoginTest extends BaseTest {
      * Проверяет вход в систему по кнопке "Войти в аккаунт" на главной странице
      */
     @Test
-    @DisplayName("Вход по кнопке 'Войти в аккаунт' на главной")
+    @DisplayName("Вход по кнопке 'Войти в аккаунт' на главной странице")
+    @Description("Проверка авторизации через кнопку 'Войти в аккаунт'. Ожидается успешный вход в систему")
+    @Step("Проверка авторизации через кнопку 'Войти в аккаунт'")
     public void loginViaAccountButtonTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
-        assertTrue("Должна отображаться страница логина", loginPage.isLoginPageLoaded());
+        String testUserEmail = loginPage.createUserViaApi();
+
+        usersToCleanup.add(testUserEmail);
+
+        loginPage.setEmail(testUserEmail);
+        loginPage.setPassword(VALID_PASSWORD);
+        loginPage.clickLoginButton();
+
+        assertTrue("После успешной авторизации должна отображаться главная страница",
+                mainPage.isMainPageLoaded());
     }
 
     /**
@@ -32,10 +45,21 @@ public class LoginTest extends BaseTest {
      */
     @Test
     @DisplayName("Вход через кнопку 'Личный кабинет'")
+    @Description("Проверка авторизации через кнопку 'Личный кабинет'. Ожидается успешный вход в систему")
+    @Step("Проверка авторизации через кнопку 'Личный кабинет'")
     public void loginViaPersonalAccountTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickPersonalAccountButton();
-        assertTrue("Должна отображаться страница логина", loginPage.isLoginPageLoaded());
+        String testUserEmail = loginPage.createUserViaApi();
+
+        usersToCleanup.add(testUserEmail);
+
+        loginPage.setEmail(testUserEmail);
+        loginPage.setPassword(VALID_PASSWORD);
+        loginPage.clickLoginButton();
+
+        assertTrue("После успешной авторизации должна отображаться главная страница",
+                mainPage.isMainPageLoaded());
     }
 
     /**
@@ -43,6 +67,8 @@ public class LoginTest extends BaseTest {
      */
     @Test
     @DisplayName("Вход через кнопку в форме регистрации")
+    @Description("Проверка перехода на страницу логина со страницы регистрации. Ожидается загрузка страницы авторизации")
+    @Step("Проверка перехода на страницу логина с формы регистрации")
     public void loginFromRegistrationPageTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
@@ -56,18 +82,16 @@ public class LoginTest extends BaseTest {
      */
     @Test
     @DisplayName("Вход через кнопку в форме восстановления пароля")
+    @Description("Проверка навигации между страницей восстановления пароля и логина. Ожидается корректный переход между страницами")
+    @Step("Проверка перехода на страницу логина со страницы восстановления пароля")
     public void loginFromPasswordRecoveryPageTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
-
-        // Переходим на страницу восстановления пароля
         loginPage.clickRecoverPasswordLink();
 
-        // Проверяем что перешли на страницу восстановления
         assertTrue("Должна отображаться страница восстановления пароля",
                 driver.getCurrentUrl().contains("/forgot-password"));
 
-        // Возвращаемся назад на страницу логина
         driver.navigate().back();
     }
 
@@ -77,13 +101,13 @@ public class LoginTest extends BaseTest {
      */
     @Test
     @DisplayName("Успешный вход с валидными данными")
+    @Description("Проверка авторизации с валидными данными. Ожидается успешный вход и переход на главную страницу")
+    @Step("Проверка успешного входа с валидными учетными данными")
     public void successfulLoginTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
-        // Создаем пользователя через API
         String testUserEmail = loginPage.createUserViaApi();
 
-        // Добавляем пользователя в список для очистки после теста
         usersToCleanup.add(testUserEmail);
         loginPage.setEmail(testUserEmail);
         loginPage.setPassword(VALID_PASSWORD);
@@ -99,12 +123,12 @@ public class LoginTest extends BaseTest {
      */
     @Test
     @DisplayName("Ошибка при входе с неверным паролем")
+    @Description("Проверка авторизации с неверным паролем. Ожидается сообщение об ошибке")
+    @Step("Проверка ошибки авторизации при вводе неверного пароля")
     public void loginWithInvalidPasswordTest() {
         MainPage mainPage = new MainPage(driver);
         LoginPage loginPage = mainPage.clickLoginAccountButton();
-        // Создаем пользователя через API
         String testUserEmail = loginPage.createUserViaApi();
-        // Добавляем пользователя в список для очистки после теста
         usersToCleanup.add(testUserEmail);
 
         loginPage.setEmail(testUserEmail);

@@ -11,6 +11,11 @@ public class DriverConfig {
     public static final String BASE_URL = "https://stellarburgers.education-services.ru/";
 
     /**
+     * Базовый URL для API запросов
+     */
+    public static final String API_BASE_URL = "https://stellarburgers.education-services.ru/api/";
+
+    /**
      * Таймаут неявного ожидания элементов (секунды)
      * WebDriver будет ждать появления элемента перед выбрасыванием исключения
      */

@@ -1,6 +1,6 @@
 package ru.yandex.praktikum.constants;
 
-import java.util.UUID;
+import net.datafaker.Faker;
 
 /**
  * Константы тестовых данных для UI-тестов.
@@ -8,9 +8,9 @@ import java.util.UUID;
  */
 public class TestConstants {
     /**
-     * Валидный email существующего пользователя для тестов
+     * Генератор тестовых данных для создания реалистичных пользовательских данных
      */
-    public static final String VALID_EMAIL = "Ivanov_BurgerMaster@mail.ru";
+    private static final Faker faker = new Faker();
 
     /**
      * Валидный пароль существующего пользователя
@@ -28,22 +28,17 @@ public class TestConstants {
     public static final String SHORT_PASSWORD = "12345";
 
     /**
-     * Несуществующий email для негативного тестирования
-     */
-    public static final String INVALID_EMAIL = "nonexistent@test.com";
-
-    /**
      * Неверный пароль для проверки ошибок авторизации
      */
-    public static final String INVALID_PASSWORD = "wrongpassword";
+    public static final String INVALID_PASSWORD = "12345";
 
     /**
      * Генерирует уникальный email для тестовой регистрации.
-     * Позволяет избежать конфликтов при параллельном запуске тестов.
+     * Использует DataFaker для создания более реалистичных тестовых данных.
      *
-     * @return уникальный email в формате user_<UUID>@test.com
+     * @return уникальный email
      */
     public static String generateUniqueEmail() {
-        return "user_" + UUID.randomUUID() + "@test.com";
+        return faker.internet().emailAddress();
     }
 }

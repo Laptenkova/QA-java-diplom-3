@@ -17,12 +17,12 @@ public class RegisterPage {
     private WebDriverWait wait;
 
     // Локаторы элементов страницы регистрации
-    private final By nameField = By.xpath("(//input[@name='name'])[1]");
-    private final By emailField = By.xpath("(//input[@name='name'])[2]");
-    private final By passwordField = By.cssSelector("input[name='Пароль']");
-    private final By registerButton = By.cssSelector("button.button_button__33qZ0.button_button_type_primary__1O7Bx.button_button_size_medium__3zxIa");
-    private final By loginLink = By.cssSelector("a[href='/login']");
-    private final By passwordError = By.xpath(".//p[contains(@class, 'input__error')]");
+    private final By nameField = By.xpath("//label[text()='Имя']/following-sibling::input");
+    private final By emailField = By.xpath("//label[text()='Email']/following-sibling::input");
+    private final By passwordField = By.xpath("//label[text()='Пароль']/following-sibling::input");
+    private final By registerButton = By.xpath("//button[contains(text(), 'Зарегистрироваться')]");
+    private final By loginLink = By.xpath("//a[contains(text(), 'Войти')]");
+    private final By passwordError = By.cssSelector("p.input__error");
 
     /**
      * Конструктор инициализирует драйвер и ожидание
